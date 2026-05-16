@@ -1,0 +1,255 @@
+/* =====================================================
+   PROCESSO — Timeline horizontal com 4 etapas
+===================================================== */
+
+.section-processo {
+  position: relative;
+  background: linear-gradient(180deg, var(--ink-deep) 0%, var(--ink) 100%);
+  padding: clamp(80px, 10vh, 140px) 0;
+  overflow: hidden;
+}
+
+/* Decoração */
+.section-processo::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(at 50% 0%, rgba(193,59,0,.06) 0%, transparent 38%),
+    radial-gradient(at 0% 100%, rgba(64,69,42,.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.processo-wrap {
+  position: relative;
+  max-width: 2800px;
+  margin: 0 auto;
+  padding-left: clamp(40px, 7vw, 140px);
+  padding-right: clamp(40px, 7vw, 140px);
+}
+
+/* Header centralizado */
+.processo-head {
+  max-width: 760px;
+  margin: 0 auto clamp(72px, 9vh, 100px);
+  text-align: center;
+}
+.processo-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.processo-eyebrow::before {
+  content: '03';
+  font-weight: 500;
+  color: var(--gold-mustard);
+}
+.processo-eyebrow::after {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: var(--terra);
+}
+.processo-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--white);
+  letter-spacing: -.005em;
+  margin-bottom: 18px;
+}
+.processo-title em {
+  color: var(--terra);
+  font-style: italic;
+  font-family: var(--font-quote);
+  font-weight: 500;
+}
+.processo-intro {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,.72);
+  font-weight: 300;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Timeline horizontal — 4 colunas */
+.processo-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(20px, 2vw, 32px);
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Linha conectora horizontal (passa atrás dos números, no centro vertical da row de números) */
+.processo-timeline::before {
+  content:'';
+  position: absolute;
+  top: 32px;        /* alinha com centro do círculo (64px / 2) */
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent 0%,
+    rgba(193,59,0,.5) 20%,
+    rgba(193,59,0,.5) 80%,
+    transparent 100%
+  );
+  z-index: 0;
+}
+
+/* Etapa individual */
+.etapa {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .9s var(--ease-soft), transform .9s var(--ease-soft);
+}
+.etapa.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.etapa:nth-child(1) { transition-delay: 0s; }
+.etapa:nth-child(2) { transition-delay: .12s; }
+.etapa:nth-child(3) { transition-delay: .24s; }
+.etapa:nth-child(4) { transition-delay: .36s; }
+
+/* Círculo numerado (anchor da etapa) */
+.etapa-num {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--ink-deep);
+  border: 1px solid rgba(193,59,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--terra);
+  flex-shrink: 0;
+  transition: all .55s var(--ease-bounce);
+  z-index: 2;
+}
+.etapa-num::before {
+  content:'';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(193,59,0,.18);
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity .5s var(--ease-soft), transform .5s var(--ease-soft);
+}
+.etapa.in .etapa-num {
+  background: var(--terra-gradient);
+  color: var(--white);
+  border-color: transparent;
+  box-shadow: 0 8px 28px rgba(193,59,0,.45);
+}
+.etapa.in .etapa-num::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Pulse no número da última etapa (foco no resultado) */
+.etapa:last-child .etapa-num::after {
+  content:'';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--terra);
+  opacity: 0;
+  animation: etapaPulse 2.4s ease infinite;
+  animation-delay: 1s;
+  z-index: -1;
+}
+@keyframes etapaPulse {
+  0%   { transform: scale(1); opacity: .55; }
+  70%  { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Conteúdo abaixo do número */
+.etapa-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 4px;
+}
+
+.etapa-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  font-weight: 600;
+  line-height: 1.32;
+  color: var(--white);
+  letter-spacing: -.005em;
+}
+
+.etapa-text {
+  font-family: var(--font-body);
+  font-size: .92rem;
+  line-height: 1.66;
+  color: rgba(255,255,255,.66);
+  font-weight: 300;
+}
+
+/* Responsive — colapsa pra timeline vertical */
+@media (max-width: 980px) {
+  .processo-timeline {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-left: 16px;
+  }
+
+  /* Linha vertical em vez de horizontal */
+  .processo-timeline::before {
+    top: 32px;
+    bottom: 32px;
+    left: 32px;        /* alinha com centro do círculo (mobile) */
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      rgba(193,59,0,.5) 8%,
+      rgba(193,59,0,.5) 92%,
+      transparent 100%
+    );
+  }
+
+  .etapa {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+  }
+
+  .etapa-body {
+    padding-top: 12px;
+    flex: 1;
+  }
+
+  .etapa-title {
+    font-size: 1.1rem;
+  }
+}

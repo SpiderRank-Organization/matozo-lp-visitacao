@@ -1,0 +1,335 @@
+/* =====================================================
+   CENÁRIOS — 2x2 grid de identificação de situação
+===================================================== */
+
+.section-cenarios {
+  position: relative;
+  background: var(--ink-deep);
+  padding: clamp(80px, 10vh, 140px) 0;
+  overflow: hidden;
+}
+
+/* Decoração sutil */
+.section-cenarios::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(at 90% 20%, rgba(193,59,0,.06) 0%, transparent 38%),
+    radial-gradient(at 10% 80%, rgba(64,69,42,.08) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.cenarios-wrap {
+  position: relative;
+  max-width: 2800px;
+  margin: 0 auto;
+  padding-left: clamp(40px, 7vw, 140px);
+  padding-right: clamp(40px, 7vw, 140px);
+}
+
+/* Header — centralizado */
+.cenarios-head {
+  max-width: 760px;
+  margin: 0 auto clamp(56px, 8vh, 80px);
+  text-align: center;
+}
+.cenarios-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.cenarios-eyebrow::before {
+  content: '02';
+  font-weight: 500;
+  color: var(--gold-mustard);
+}
+.cenarios-eyebrow::after {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: var(--terra);
+}
+.cenarios-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--white);
+  letter-spacing: -.005em;
+  margin-bottom: 18px;
+}
+.cenarios-title em {
+  color: var(--terra);
+  font-style: italic;
+  font-family: var(--font-quote);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.cenarios-intro {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,.72);
+  font-weight: 300;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Grid 3x2 (6 cards) */
+.cenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 1.6vw, 24px);
+  margin-bottom: clamp(56px, 7vh, 80px);
+}
+
+/* Card */
+.cenario-card {
+  position: relative;
+  background: linear-gradient(155deg, rgba(45,41,27,.65) 0%, rgba(45,45,45,.55) 100%);
+  border: 1px solid rgba(193,59,0,.18);
+  border-radius: 6px;
+  padding: clamp(28px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow: hidden;
+  transition: transform .55s var(--ease-soft),
+              border-color .35s var(--ease-out),
+              box-shadow .55s var(--ease-soft);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.cenario-card.in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .9s var(--ease-soft), transform .9s var(--ease-soft),
+              border-color .35s var(--ease-out), box-shadow .55s var(--ease-soft);
+}
+
+/* Stagger delays — 6 cards (3 por fila) */
+.cenario-card:nth-child(1) { transition-delay: 0s; }
+.cenario-card:nth-child(2) { transition-delay: .08s; }
+.cenario-card:nth-child(3) { transition-delay: .16s; }
+.cenario-card:nth-child(4) { transition-delay: .24s; }
+.cenario-card:nth-child(5) { transition-delay: .32s; }
+.cenario-card:nth-child(6) { transition-delay: .40s; }
+
+/* Faixa lateral terracotta */
+.cenario-card::before {
+  content:'';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: var(--terra-gradient);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .55s var(--ease-soft);
+}
+
+/* Glow/decoração no canto direito superior (sutil) */
+.cenario-card::after {
+  content:'';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(193,59,0,.18) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity .6s var(--ease-soft);
+  pointer-events: none;
+}
+
+.cenario-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(193,59,0,.45);
+  box-shadow: 0 24px 60px rgba(0,0,0,.4);
+}
+.cenario-card:hover::before { transform: scaleY(1); }
+.cenario-card:hover::after { opacity: 1; }
+
+/* Header do card: número + ícone */
+.cenario-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cenario-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--terra);
+  letter-spacing: .04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cenario-num strong {
+  color: var(--gold-mustard);
+  font-weight: 500;
+}
+.cenario-num::after {
+  content:'';
+  width: 24px;
+  height: 1px;
+  background: rgba(193,59,0,.35);
+  margin-left: 4px;
+}
+
+.cenario-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(193,59,0,.15) 0%, rgba(193,59,0,.05) 100%);
+  border: 1px solid rgba(193,59,0,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--terra);
+  flex-shrink: 0;
+  transition: transform .45s var(--ease-bounce), background .35s var(--ease-out);
+}
+.cenario-card:hover .cenario-icon {
+  transform: rotate(-8deg) scale(1.08);
+  background: linear-gradient(135deg, rgba(193,59,0,.3) 0%, rgba(193,59,0,.12) 100%);
+}
+.cenario-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* Título do card */
+.cenario-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  font-weight: 500;
+  line-height: 1.32;
+  color: var(--white);
+  letter-spacing: -.005em;
+  margin-top: 4px;
+}
+
+/* Texto do card */
+.cenario-text {
+  font-family: var(--font-body);
+  font-size: .94rem;
+  line-height: 1.66;
+  color: rgba(255,255,255,.66);
+  font-weight: 300;
+}
+
+/* Footer do card — link sutil */
+.cenario-card-link {
+  margin-top: auto;
+  padding-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-brand);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--terra-light);
+  opacity: .75;
+  transition: opacity var(--transition), gap var(--transition), color var(--transition);
+}
+.cenario-card-link svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--transition);
+}
+.cenario-card:hover .cenario-card-link {
+  opacity: 1;
+  color: var(--terra);
+  gap: 12px;
+}
+.cenario-card:hover .cenario-card-link svg {
+  transform: translateX(2px);
+}
+
+/* Closing paragraph + CTA — centralizado */
+.cenarios-closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: clamp(40px, 5vh, 60px);
+  border-top: 1px solid rgba(193,59,0,.15);
+}
+.cenarios-closing-text {
+  font-family: var(--font-quote);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,.78);
+  font-weight: 400;
+}
+.cenarios-closing-text em {
+  color: var(--terra);
+  font-style: italic;
+}
+.cenarios-closing-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--terra-light);
+  border: 1px solid var(--terra);
+  border-radius: 4px;
+  letter-spacing: .04em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition);
+}
+.cenarios-closing-cta::before {
+  content:''; position: absolute;
+  inset: 0;
+  background: var(--terra-gradient);
+  opacity: 0;
+  transition: opacity .35s var(--ease-out);
+  z-index: -1;
+}
+.cenarios-closing-cta:hover {
+  color: var(--white);
+  border-color: var(--terra);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(193,59,0,.3);
+}
+.cenarios-closing-cta:hover::before { opacity: 1; }
+.cenarios-closing-cta svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition);
+}
+.cenarios-closing-cta:hover svg { transform: translateX(3px); }
+
+/* Responsive */
+@media (max-width: 1180px) {
+  .cenarios-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .cenarios-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

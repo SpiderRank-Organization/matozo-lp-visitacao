@@ -1,0 +1,15 @@
+{
+  "name": "matozo-lp1",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Landing Page 1 — Matozo & Espinosa Advocacia (tráfego pago)",
+  "scripts": {
+    "dev": "vite --host --port 5173 --open",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}

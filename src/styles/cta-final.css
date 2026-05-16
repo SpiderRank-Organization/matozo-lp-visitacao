@@ -1,0 +1,373 @@
+/* =====================================================
+   CTA FINAL — Split 50/50 (foto + CTA) + bloco contato
+===================================================== */
+
+.section-cta {
+  position: relative;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--ink-deep) 100%);
+  padding: clamp(80px, 10vh, 140px) 0 clamp(60px, 7vh, 100px);
+  overflow: hidden;
+}
+
+.section-cta::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(at 80% 30%, rgba(193,59,0,.10) 0%, transparent 38%),
+    radial-gradient(at 20% 70%, rgba(64,69,42,.10) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.cta-wrap {
+  position: relative;
+  max-width: 2800px;
+  margin: 0 auto;
+  padding-left: clamp(40px, 7vw, 140px);
+  padding-right: clamp(40px, 7vw, 140px);
+}
+
+/* SPLIT 50/50 — foto + CTA */
+.cta-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+  align-items: stretch;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Lado esquerdo — foto */
+.cta-photo {
+  position: relative;
+  border: 1px solid rgba(193,59,0,.25);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--warm-dark-gradient);
+  min-height: 480px;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 1s var(--ease-soft), transform 1s var(--ease-soft);
+}
+.cta-photo.in {
+  opacity: 1;
+  transform: translateX(0);
+}
+.cta-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: saturate(1.05) contrast(1.02);
+  transition: transform 1.4s var(--ease-soft), filter 1.2s var(--ease-soft);
+}
+.cta-photo:hover img {
+  transform: scale(1.04);
+  filter: saturate(1.15) contrast(1.06);
+}
+
+/* Cantos terracotta */
+.cta-photo::before, .cta-photo::after {
+  content:'';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  z-index: 2;
+  pointer-events: none;
+}
+.cta-photo::before {
+  top: 14px; left: 14px;
+  border-top: 2px solid var(--terra);
+  border-left: 2px solid var(--terra);
+}
+.cta-photo::after {
+  bottom: 14px; right: 14px;
+  border-bottom: 2px solid var(--terra);
+  border-right: 2px solid var(--terra);
+}
+
+/* Vinheta sutil sobre a foto */
+.cta-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    transparent 60%,
+    rgba(20,20,20,.5) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Tag flutuante embaixo */
+.cta-photo-tag {
+  position: absolute;
+  bottom: 24px; left: 24px;
+  z-index: 2;
+  padding: 10px 18px;
+  background: rgba(20,20,20,.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(193,59,0,.4);
+  font-family: var(--font-brand);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--terra-light);
+  border-radius: 2px;
+}
+.cta-photo-tag strong {
+  color: var(--terra);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 2px;
+  font-size: 9px;
+  letter-spacing: .26em;
+}
+
+/* Lado direito — CTA */
+.cta-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 1s var(--ease-soft) .15s, transform 1s var(--ease-soft) .15s;
+}
+.cta-content.in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.cta-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--terra);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+}
+.cta-eyebrow::before {
+  content: '05';
+  font-weight: 500;
+  color: var(--gold-mustard);
+}
+.cta-eyebrow::after {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: var(--terra);
+}
+
+.cta-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--white);
+  letter-spacing: -.005em;
+}
+.cta-headline em {
+  color: var(--terra);
+  font-style: italic;
+  font-family: var(--font-quote);
+  font-weight: 500;
+}
+
+.cta-subheadline {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 1.72;
+  color: rgba(255,255,255,.72);
+  font-weight: 300;
+  max-width: 520px;
+  margin-bottom: 8px;
+}
+
+/* Botão grande WhatsApp */
+.cta-button-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 18px 36px;
+  background: #25D366;
+  color: var(--white);
+  border-radius: 4px;
+  letter-spacing: .02em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition);
+  box-shadow: 0 10px 30px rgba(37,211,102,.32);
+  width: fit-content;
+}
+.cta-button::before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background: #1eb558;
+  opacity: 0;
+  transition: opacity .35s var(--ease-soft);
+}
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(37,211,102,.5);
+}
+.cta-button:hover::before { opacity: 1; }
+.cta-button > * { position: relative; z-index: 1; }
+.cta-button svg { width: 20px; height: 20px; }
+
+.cta-microtext {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--gray-muted);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Linha OAB no rodapé do bloco */
+.cta-oab {
+  margin-top: 16px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(193,59,0,.18);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--gray-muted);
+  line-height: 1.7;
+  letter-spacing: .02em;
+}
+.cta-oab strong {
+  color: var(--terra-light);
+  font-weight: 500;
+}
+
+/* =====================================================
+   BLOCO CONTATO — full width compacto
+===================================================== */
+.contato-block {
+  margin-top: clamp(60px, 7vh, 100px);
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px clamp(28px, 4vw, 48px);
+  background: linear-gradient(135deg, rgba(193,59,0,.06) 0%, rgba(64,69,42,.08) 100%);
+  border: 1px solid rgba(193,59,0,.2);
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(24px, 3vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.contato-block::before {
+  content:'';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--terra-gradient);
+}
+
+.contato-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.contato-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: rgba(193,59,0,.12);
+  border: 1px solid rgba(193,59,0,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--terra);
+  flex-shrink: 0;
+}
+.contato-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.contato-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.contato-label {
+  font-family: var(--font-brand);
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--terra);
+  font-weight: 400;
+}
+.contato-value {
+  font-family: var(--font-body);
+  font-size: .94rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,.85);
+  font-weight: 400;
+  word-break: break-word;
+}
+.contato-value a {
+  color: rgba(255,255,255,.85);
+  transition: color var(--transition);
+}
+.contato-value a:hover {
+  color: var(--terra-light);
+}
+
+/* Tablet — 4 → 2 cols */
+@media (max-width: 1180px) {
+  .contato-block {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 980px) {
+  .cta-split {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .cta-photo {
+    min-height: 360px;
+    max-height: 460px;
+  }
+}
+
+/* Mobile — 1 col */
+@media (max-width: 640px) {
+  .contato-block {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+@media (max-width: 640px) {
+  .cta-photo {
+    min-height: 320px;
+  }
+  .cta-button {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 28px;
+  }
+  .cta-button-wrap {
+    align-items: stretch;
+  }
+}

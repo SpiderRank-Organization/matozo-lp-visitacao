@@ -1,0 +1,507 @@
+/* =====================================================
+   NAVBAR — bloco separado acima da hero (não sobrepõe)
+===================================================== */
+.navbar {
+  position: relative;
+  z-index: 100;
+  padding: 18px 48px;
+  background: var(--ink-deep);
+  border-bottom: 1px solid rgba(193,59,0,.15);
+}
+.nav-inner {
+  max-width: 2800px;
+  margin: 0 auto;
+  padding: 0 clamp(8px, 2vw, 32px);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 14px;
+  transition: opacity var(--transition);
+}
+.nav-logo:hover { opacity: .85; }
+.nav-logo img {
+  height: 38px;
+  width: auto;
+  display: block;
+  filter: brightness(1.05);
+}
+.navbar.scrolled .nav-logo img { height: 32px; transition: height .35s var(--ease-out); }
+
+.nav-links { display: flex; gap: 36px; }
+.nav-link {
+  font-family: var(--font-brand);
+  font-size: 12px; font-weight: 400; letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.78);
+  position: relative;
+  transition: color var(--transition);
+}
+.nav-link::after {
+  content:''; position: absolute; left: 0; right: 0; bottom: -6px;
+  height: 1px; background: var(--terra);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s var(--ease-soft);
+}
+.nav-link:hover { color: var(--terra-light); }
+.nav-link:hover::after { transform: scaleX(1); }
+.nav-link.active { color: var(--terra); }
+.nav-link.active::after { transform: scaleX(1); background: var(--terra); }
+
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 600;
+  color: var(--white);
+  background: #25D366;
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition: all var(--transition);
+  box-shadow: 0 4px 14px rgba(37,211,102,.3);
+}
+.nav-cta:hover {
+  background: #1eb558;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37,211,102,.45);
+}
+.nav-cta svg { width: 16px; height: 16px; }
+
+/* =====================================================
+   HERO — bloco abaixo do navbar (não sobreposto)
+   Travado em 2800px max pra layout não esticar em zoom baixo
+===================================================== */
+.hero {
+  position: relative;
+  min-height: clamp(620px, 78vh, 880px);
+  max-width: 2800px;
+  margin: 0 auto;
+  background: var(--ink-deep);
+  overflow: hidden;
+  display: flex; align-items: center;
+  padding: 60px 0 90px;
+  box-shadow: 0 0 80px 20px rgba(0,0,0,.4);
+}
+
+/* Background image — FULL BLEED, com top anchor pra preservar headroom acima das advogadas */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('/img/matozo-espinosa-advogada.webp');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+/* Overlay escuro — gradient forte na esquerda fade pra leve transparência na direita */
+.hero-overlay {
+  position: absolute; inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+/* Gradient horizontal — escuro à esquerda (texto blindado) → claro à direita (foto visível) */
+.hero-overlay::before {
+  content:''; position: absolute;
+  inset: 0;
+  background: linear-gradient(to right,
+    rgba(20,20,20,.95) 0%,
+    rgba(20,20,20,.88) 22%,
+    rgba(20,20,20,.65) 42%,
+    rgba(20,20,20,.35) 65%,
+    rgba(20,20,20,.18) 85%,
+    rgba(20,20,20,.10) 100%
+  );
+}
+/* Vinheta vertical sutil pra dar profundidade */
+.hero-overlay::after {
+  content:''; position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    rgba(20,20,20,.25) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(20,20,20,.45) 100%
+  );
+}
+/* Vinheta inferior pra integrar com a próxima section */
+.hero-vignette {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 30%;
+  background: linear-gradient(to bottom, transparent 0%, rgba(29,29,29,.6) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Mesh gradient sutil sobre o overlay (mantém a vibe Awwwards) */
+.hero-mesh {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(at 15% 50%, rgba(193,59,0,.18) 0px, transparent 40%),
+    radial-gradient(at 5% 20%, rgba(64,69,42,.20) 0px, transparent 45%);
+  z-index: 2;
+  pointer-events: none;
+  animation: meshDrift 22s ease-in-out infinite alternate;
+}
+@keyframes meshDrift {
+  0%   { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(2%, -1%) scale(1.05); }
+  100% { transform: translate(-1%, 2%) scale(1.02); }
+}
+
+/* Grain texture */
+.hero-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: .035;
+  z-index: 3;
+  pointer-events: none;
+  animation: grainShift 8s steps(2) infinite;
+}
+@keyframes grainShift {
+  0%,100% { transform: translate(0,0); }
+  25% { transform: translate(-1%, 1%); }
+  50% { transform: translate(1%, -1%); }
+  75% { transform: translate(-1%, -1%); }
+}
+
+/* Borda dourada superior */
+.hero::before {
+  content:''; position: absolute; top: 0; left: 0; right: 0;
+  height: 1px; background: var(--terra-gradient); opacity: .55;
+  z-index: 5;
+}
+
+/* Linha vertical lateral esquerda decorativa */
+.hero-line {
+  position: absolute;
+  left: clamp(20px, 3.5vw, 70px);
+  top: 18%; bottom: 18%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(193,59,0,.35), transparent);
+  z-index: 4;
+}
+
+/* Override do container só dentro do hero — pinar à esquerda */
+.hero .container {
+  max-width: none;
+  padding-left: clamp(40px, 7vw, 140px);
+  padding-right: 0;
+  margin: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  max-width: 620px;
+}
+
+/* Pill badge (eyebrow) */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 16px;
+  border: 1px solid rgba(193,59,0,.55);
+  border-radius: 999px;
+  background: rgba(193,59,0,.08);
+  font-family: var(--font-brand);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: .24em; text-transform: uppercase;
+  color: var(--terra);
+  margin-bottom: 28px;
+  opacity: 0; animation: fadeSlideUp .85s var(--ease-out) .15s both;
+}
+.hero-badge svg {
+  width: 12px; height: 12px;
+  flex-shrink: 0;
+}
+.hero-badge::after {
+  content:'';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--terra);
+  box-shadow: 0 0 10px var(--terra);
+  animation: terraPulse 2s ease infinite;
+  margin-left: 4px;
+}
+@keyframes terraPulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: .5; transform: scale(1.2); }
+}
+
+/* H1 */
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--white);
+  margin-bottom: 22px;
+  letter-spacing: -.005em;
+  opacity: 0; animation: fadeSlideUp .9s var(--ease-out) .3s both;
+}
+.hero-title .accent {
+  color: var(--terra);
+  font-style: italic;
+  font-family: var(--font-quote);
+  font-weight: 500;
+  font-size: 1.08em;
+  letter-spacing: 0;
+  line-height: 1.15;
+  display: block;
+  margin-top: 4px;
+}
+
+/* Subheadline (substitui bullets + quote) */
+.hero-subheadline {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,.78);
+  max-width: 540px;
+  margin-bottom: 38px;
+  opacity: 0; animation: fadeSlideUp .9s var(--ease-out) .42s both;
+}
+
+/* Bullet line — Divórcio • Guarda & Pensão • Inventários • Holding Familiar (legado) */
+.hero-bullets {
+  font-family: var(--font-body);
+  font-size: .92rem;
+  font-weight: 500;
+  color: rgba(255,255,255,.88);
+  margin-bottom: 26px;
+  letter-spacing: .01em;
+  opacity: 0; animation: fadeSlideUp .9s var(--ease-out) .4s both;
+}
+.hero-bullets span {
+  display: inline-block;
+}
+.hero-bullets .dot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--terra);
+  margin: 0 14px 4px;
+  vertical-align: middle;
+}
+
+/* Quote com border-left */
+.hero-quote {
+  border-left: 2px solid var(--terra);
+  padding: 4px 0 4px 18px;
+  margin-bottom: 36px;
+  font-family: var(--font-quote);
+  font-size: .95rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.55;
+  color: rgba(255,255,255,.72);
+  max-width: 520px;
+  opacity: 0; animation: fadeSlideUp .9s var(--ease-out) .5s both;
+}
+
+/* CTAs */
+.hero-ctas {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  opacity: 0; animation: fadeSlideUp .9s var(--ease-out) .65s both;
+}
+
+.btn-whatsapp, .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition);
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: .02em;
+}
+
+.btn-whatsapp {
+  color: var(--white);
+  background: #25D366;
+  box-shadow: 0 8px 24px rgba(37,211,102,.32);
+}
+.btn-whatsapp::before {
+  content:''; position: absolute; inset: 0;
+  background: #1eb558;
+  opacity: 0; transition: opacity .35s var(--ease-soft);
+}
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(37,211,102,.5);
+}
+.btn-whatsapp:hover::before { opacity: 1; }
+.btn-whatsapp > * { position: relative; z-index: 1; }
+.btn-whatsapp svg { width: 18px; height: 18px; }
+
+.btn-secondary {
+  color: var(--white);
+  background: rgba(63,68,75,.85);
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+}
+.btn-secondary:hover {
+  background: var(--terra);
+  border-color: var(--terra);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-terra);
+}
+.btn-arrow { display: inline-block; transition: transform .35s var(--ease-soft); }
+.btn-whatsapp:hover .btn-arrow,
+.btn-secondary:hover .btn-arrow { transform: translateX(4px); }
+
+.magnetic { will-change: transform; }
+
+/* Trust strip — barra fina embaixo do hero */
+.hero-trust {
+  position: absolute;
+  bottom: 36px;
+  left: 0; right: 0;
+  z-index: 5;
+  padding-left: clamp(40px, 7vw, 140px);
+  padding-right: clamp(40px, 7vw, 140px);
+  opacity: 0; animation: fadeSlideUp 1s var(--ease-out) .9s both;
+}
+.hero-trust-inner {
+  display: flex; gap: 40px; flex-wrap: wrap;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.trust-item {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--font-body);
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,.6);
+  letter-spacing: .02em;
+}
+.trust-item svg {
+  width: 16px; height: 16px;
+  color: var(--terra);
+  flex-shrink: 0;
+}
+.trust-item strong {
+  color: var(--terra-light);
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+/* SCROLL INDICATOR — escondido por padrão (opcional) */
+.scroll-indicator {
+  display: none;
+}
+
+/* Keyframe global */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* CUSTOM CURSOR — removido */
+.cursor-dot, .cursor-ring { display: none !important; }
+
+/* WHATSAPP FAB */
+.whatsapp-fab {
+  position: fixed;
+  bottom: 30px; right: 30px;
+  z-index: 100;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 30px rgba(37,211,102,.4);
+  transition: transform var(--transition);
+  cursor: pointer;
+}
+.whatsapp-fab:hover { transform: scale(1.08) translateY(-2px); }
+.whatsapp-fab::before {
+  content:''; position: absolute; inset: 0;
+  border-radius: 50%; background: #25D366;
+  animation: waPulse 2.6s ease infinite;
+  z-index: -1;
+}
+@keyframes waPulse {
+  0% { transform: scale(1); opacity: .55; }
+  70%, 100% { transform: scale(1.7); opacity: 0; }
+}
+
+/* RESPONSIVE — viewport menor reduz padding-left do conteúdo */
+@media (max-width: 1280px) {
+  .hero .container {
+    padding-left: clamp(32px, 5vw, 90px);
+  }
+  .hero-trust {
+    padding-left: clamp(32px, 5vw, 90px);
+    padding-right: clamp(32px, 5vw, 90px);
+  }
+  .hero-content { max-width: 580px; }
+}
+
+/* Threshold crítico: quando 760px fixo da dark area começa a sufocar a foto
+   (effective viewport <1180), reduzimos o conteúdo pra permitir mais foto */
+@media (max-width: 1180px) {
+  .hero-content { max-width: 460px; }
+  .hero-overlay::before {
+    background: linear-gradient(to right,
+      rgba(20,20,20,.96) 0%,
+      rgba(20,20,20,.85) 35%,
+      rgba(20,20,20,.55) 60%,
+      rgba(20,20,20,.30) 85%,
+      rgba(20,20,20,.15) 100%
+    );
+  }
+  .hero-title { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+  .hero-bullets { font-size: .88rem; }
+  .hero-bullets .dot { margin: 0 9px 3px; }
+  .hero-quote { font-size: .9rem; }
+}
+
+/* Mobile — overlay ainda mais escuro pra texto continuar legível */
+@media (max-width: 980px) {
+  .nav-links { display: none; }
+  .navbar { padding: 16px 24px; }
+  .navbar.scrolled { padding: 12px 24px; }
+
+  .hero { padding: 60px 0 140px; }
+  .hero-bg { background-position: 70% center; }
+  .hero-overlay::before {
+    background: linear-gradient(to right,
+      rgba(20,20,20,.94) 0%,
+      rgba(20,20,20,.82) 50%,
+      rgba(20,20,20,.68) 100%
+    );
+  }
+  .hero-overlay::after {
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      transparent 60%,
+      rgba(20,20,20,.55) 100%
+    );
+  }
+  .hero-content { max-width: 100%; }
+  .hero-line { display: none; }
+  .hero-trust { padding: 0 24px; }
+  .hero-trust-inner { gap: 20px; }
+
+  .cursor-dot, .cursor-ring { display: none; }
+  body { cursor: auto; }
+  button, a { cursor: pointer; }
+}
+@media (max-width: 640px) {
+  .hero-content { max-width: 100%; }
+  .hero-badge { font-size: 10px; padding: 6px 14px; }
+  .hero-bullets { font-size: .95rem; }
+  .hero-bullets .dot { margin: 0 10px 3px; }
+  .hero-quote { font-size: .98rem; padding-left: 16px; }
+  .btn-whatsapp, .btn-secondary { padding: 14px 24px; font-size: 13px; flex: 1; justify-content: center; }
+  .nav-cta { display: none; }
+  .hero-trust-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+}

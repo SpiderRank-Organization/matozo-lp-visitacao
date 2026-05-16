@@ -1,0 +1,99 @@
+/* =====================================================
+   DESIGN TOKENS — Matozo & Espinosa
+   Paleta oficial extraída de matozoespinosa.com.br
+===================================================== */
+:root {
+  /* PALETA PRIMÁRIA — Terracotta */
+  --terra-deep:    #832800;
+  --terra:         #C13B00;
+  --terra-bronze:  #985E23;
+  --terra-light:   #D1C2B3;
+
+  /* ACENTO — Mostarda + Oliva */
+  --gold-mustard:  #C9A94B;
+  --olive-deep:    #40452A;
+  --olive-mid:     #5A6038;
+
+  /* NEUTROS */
+  --ink-deep:      #1D1D1D;
+  --ink:           #2D2D2D;
+  --ink-surface:   #3F444B;
+  --warm-elev:     #45291B;
+  --gray-mid:      #69727D;
+  --gray-muted:    #8A8478;
+  --warm-white:    #F5F7FA;
+  --white:         #FFFFFF;
+
+  /* GRADIENTES */
+  --terra-gradient:      linear-gradient(135deg, #832800 0%, #C9A94B 50%, #C13B00 100%);
+  --terra-gradient-text: linear-gradient(120deg, #832800 0%, #985E23 40%, #C9A94B 70%, #C13B00 100%);
+  --terra-gradient-soft: linear-gradient(135deg, rgba(131,40,0,.12) 0%, rgba(209,194,179,.18) 100%);
+  --warm-dark-gradient:  linear-gradient(170deg, #45291B 0%, #2D2D2D 60%, #1D1D1D 100%);
+  --mesh-bg:             radial-gradient(at 20% 10%, rgba(193,59,0,.20) 0px, transparent 45%),
+                         radial-gradient(at 80% 0%, rgba(201,169,75,.12) 0px, transparent 50%),
+                         radial-gradient(at 50% 100%, rgba(64,69,42,.18) 0px, transparent 55%);
+
+  /* TIPOGRAFIA */
+  --font-display: 'Cinzel', Georgia, serif;
+  --font-quote:   'Cormorant Garamond', Georgia, serif;
+  --font-brand:   'Raleway', sans-serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* ESPAÇAMENTOS */
+  --section-py:    120px;
+  --container-max: 1400px;
+  --container-px:  48px;
+
+  /* TRANSIÇÕES */
+  --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-soft:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition:  0.3s var(--ease-out);
+
+  /* SHADOWS */
+  --shadow-sm:    0 2px 8px rgba(0,0,0,.06);
+  --shadow-md:    0 8px 24px rgba(0,0,0,.10);
+  --shadow-lg:    0 20px 56px rgba(0,0,0,.20);
+  --shadow-terra: 0 14px 44px rgba(193,59,0,.32);
+  --glow-terra:   0 0 0 1px rgba(193,59,0,.18), 0 0 60px rgba(193,59,0,.18), 0 0 120px rgba(193,59,0,.10);
+}
+
+/* RESET */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+html { background: var(--ink-deep); }
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--white);
+  background: var(--ink-deep);
+  background-image:
+    radial-gradient(ellipse at 0% 30%, rgba(193,59,0,.08) 0%, transparent 35%),
+    radial-gradient(ellipse at 100% 70%, rgba(64,69,42,.10) 0%, transparent 35%),
+    radial-gradient(ellipse at 50% 100%, rgba(69,41,27,.10) 0%, transparent 50%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { text-decoration: none; color: inherit; cursor: pointer; }
+ul { list-style: none; }
+img { max-width: 100%; height: auto; display: block; }
+button { font: inherit; cursor: pointer; border: none; background: none; }
+::selection { background: var(--terra); color: var(--white); }
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-px);
+  position: relative;
+  z-index: 2;
+}
+
+.terra-text {
+  background: var(--terra-gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
